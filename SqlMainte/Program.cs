@@ -17,7 +17,8 @@ static class Program
             MessageBox.Show($"致命的なエラーが発生しました。\n\n{e.ExceptionObject}",
                 "致命的エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-        ApplicationConfiguration.Initialize();
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
         Application.Run(new MainForm());
     }
 }

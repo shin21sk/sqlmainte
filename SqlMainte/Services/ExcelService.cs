@@ -93,8 +93,8 @@ public class ExcelService
                 continue;
 
             var rowData = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (var (colNum, colName) in headers)
-                rowData[colName] = wsRow.Cell(colNum).GetString().Trim();
+            foreach (var kvp in headers)
+                rowData[kvp.Value] = wsRow.Cell(kvp.Key).GetString().Trim();
 
             rows.Add(rowData);
         }

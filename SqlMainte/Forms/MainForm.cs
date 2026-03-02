@@ -95,6 +95,11 @@ public class MainForm : Form
 
             var tbl = CurrentTable;
             _columns = _schema.GetColumns(tbl.Name, tbl.PrimaryKeys);
+            if (_columns.Count == 0)
+                throw new InvalidOperationException(
+                    $"テーブル '{tbl.Name}' の列情報が取得できませんでした。\n" +
+                    "appsettings.json の Name がデータベース上のテーブル名と一致しているか確認してください。\n" +
+                    "（スキーマ名 'dbo.' は含めず、テーブル名のみを指定してください）");
 
             BuildGridColumns();
 
@@ -332,8 +337,8 @@ public class MainForm : Form
         var dict = ExtractRow(row);
         // UPDATE の WHERE 用に元PKを上書き
         if (_originalKeys.TryGetValue(row, out var origKeys))
-            foreach (var (k, v) in origKeys)
-                dict[$"__orig_{k}"] = v;
+            foreach (var kvp in origKeys)
+                dict[$"__orig_{kvp.Key}"] = kvp.Value;
         return dict;
     }
 
